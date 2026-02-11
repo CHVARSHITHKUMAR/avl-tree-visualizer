@@ -89,14 +89,22 @@ function insert(node, key) {
 }
 function insertValue() {
 
-    rotationInfo = "";  // reset before insert
+    rotationInfo = "";
 
     let val = parseInt(document.getElementById("numInput").value);
 
     if (!isNaN(val)) {
+
         root = insert(root, val);
+
         drawTree(root);
+
         document.getElementById("info").innerText = rotationInfo;
+
+        // 👇 Traversal display
+        let inorderList = inorder(root, []);
+        document.getElementById("traversal").innerText =
+            "Inorder: " + inorderList.join(", ");
     }
 }
 
@@ -167,4 +175,13 @@ function deleteNode(node, key) {
     }
 
     return node;
+}
+function inorder(node, arr = []) {
+    if (!node) return arr;
+
+    inorder(node.left, arr);
+    arr.push(node.val);
+    inorder(node.right, arr);
+
+    return arr;
 }
