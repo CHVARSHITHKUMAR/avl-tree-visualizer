@@ -1,3 +1,5 @@
+console.log("Visualize file loaded");
+
 function drawTree(node, x = 600, y = 50, gap = 200) {
 
     let svg = document.getElementById("tree");
