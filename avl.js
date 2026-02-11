@@ -8,6 +8,8 @@ class Node {
 }
 
 let root = null;
+let rotationInfo = "";
+
 
 function height(n) {
     return n ? n.height : 0;
@@ -57,21 +59,28 @@ function insert(node, key) {
     let balance = getBalance(node);
 
     // LL
-    if (balance > 1 && key < node.left.val)
+    if (balance > 1 && key < node.left.val) {
+        rotationInfo = "LL Rotation";
         return rightRotate(node);
+    }
+
 
     // RR
-    if (balance < -1 && key > node.right.val)
+    if (balance < -1 && key > node.right.val) {
+        rotationInfo = "RR Rotation";
         return leftRotate(node);
+    }
 
     // LR
     if (balance > 1 && key > node.left.val) {
+        rotationInfo = "LR Rotation";
         node.left = leftRotate(node.left);
         return rightRotate(node);
     }
 
     // RL
     if (balance < -1 && key < node.right.val) {
+        rotationInfo = "RL Rotation";
         node.right = rightRotate(node.right);
         return leftRotate(node);
     }
@@ -79,12 +88,18 @@ function insert(node, key) {
     return node;
 }
 function insertValue() {
+
+    rotationInfo = "";  // reset before insert
+
     let val = parseInt(document.getElementById("numInput").value);
+
     if (!isNaN(val)) {
         root = insert(root, val);
         drawTree(root);
+        document.getElementById("info").innerText = rotationInfo;
     }
 }
+
 function deleteValue() {
     let val = parseInt(document.getElementById("numInput").value);
     if (!isNaN(val)) {
