@@ -16,12 +16,18 @@ function drawTree(node, x = 600, y = 50, gap = 200) {
             draw(node.right, x+gap, y+80, gap/1.5);
         }
 
+        let bf = height(node.left) - height(node.right);
+
         svg.innerHTML += `
-            <circle cx="${x}" cy="${y}" r="20" fill="#4CAF50"/>
-            <text x="${x}" y="${y+5}" text-anchor="middle" fill="white">
+            <circle cx="${x}" cy="${y}" r="22" fill="#4CAF50"/>
+            <text x="${x}" y="${y+4}" text-anchor="middle" fill="white" font-size="12">
                 ${node.val}
             </text>
+            <text x="${x}" y="${y+35}" text-anchor="middle" fill="black" font-size="12">
+                BF:${bf}
+            </text>
         `;
+
     }
 
     draw(node, x, y, gap);
