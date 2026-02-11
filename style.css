@@ -17,4 +17,9 @@ svg {
     margin-top: 10px;
     font-weight: bold;
 }
+.dark {
+    background-color: #121212;
+    color: white;
+}
+
 

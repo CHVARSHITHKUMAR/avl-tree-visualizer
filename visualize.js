@@ -29,6 +29,10 @@ function drawTree(node, x = 600, y = 50, gap = 200) {
         `;
 
     }
+    function toggleTheme() {
+        document.body.classList.toggle("dark");
+    }
+
 
     draw(node, x, y, gap);
 }
