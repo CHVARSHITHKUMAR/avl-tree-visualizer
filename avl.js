@@ -85,3 +85,71 @@ function insertValue() {
         drawTree(root);
     }
 }
+function deleteValue() {
+    let val = parseInt(document.getElementById("numInput").value);
+    if (!isNaN(val)) {
+        root = deleteNode(root, val);
+        drawTree(root);
+    }
+}
+
+function minValueNode(node) {
+    let current = node;
+    while (current.left)
+        current = current.left;
+    return current;
+}
+
+function deleteNode(node, key) {
+
+    if (!node) return node;
+
+    if (key < node.val)
+        node.left = deleteNode(node.left, key);
+    else if (key > node.val)
+        node.right = deleteNode(node.right, key);
+    else {
+
+        if (!node.left || !node.right) {
+            let temp = node.left ? node.left : node.right;
+
+            if (!temp)
+                node = null;
+            else
+                node = temp;
+        }
+        else {
+            let temp = minValueNode(node.right);
+            node.val = temp.val;
+            node.right = deleteNode(node.right, temp.val);
+        }
+    }
+
+    if (!node) return node;
+
+    node.height = 1 + Math.max(height(node.left), height(node.right));
+
+    let balance = getBalance(node);
+
+    // LL
+    if (balance > 1 && getBalance(node.left) >= 0)
+        return rightRotate(node);
+
+    // LR
+    if (balance > 1 && getBalance(node.left) < 0) {
+        node.left = leftRotate(node.left);
+        return rightRotate(node);
+    }
+
+    // RR
+    if (balance < -1 && getBalance(node.right) <= 0)
+        return leftRotate(node);
+
+    // RL
+    if (balance < -1 && getBalance(node.right) > 0) {
+        node.right = rightRotate(node.right);
+        return leftRotate(node);
+    }
+
+    return node;
+}
