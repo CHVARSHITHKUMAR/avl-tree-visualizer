@@ -41,3 +41,47 @@ function leftRotate(x) {
 
     return y;
 }
+function insert(node, key) {
+
+    if (!node) return new Node(key);
+
+    if (key < node.val)
+        node.left = insert(node.left, key);
+    else if (key > node.val)
+        node.right = insert(node.right, key);
+    else
+        return node;
+
+    node.height = 1 + Math.max(height(node.left), height(node.right));
+
+    let balance = getBalance(node);
+
+    // LL
+    if (balance > 1 && key < node.left.val)
+        return rightRotate(node);
+
+    // RR
+    if (balance < -1 && key > node.right.val)
+        return leftRotate(node);
+
+    // LR
+    if (balance > 1 && key > node.left.val) {
+        node.left = leftRotate(node.left);
+        return rightRotate(node);
+    }
+
+    // RL
+    if (balance < -1 && key < node.right.val) {
+        node.right = rightRotate(node.right);
+        return leftRotate(node);
+    }
+
+    return node;
+}
+function insertValue() {
+    let val = parseInt(document.getElementById("numInput").value);
+    if (!isNaN(val)) {
+        root = insert(root, val);
+        drawTree(root);
+    }
+}
